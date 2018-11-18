@@ -16,6 +16,7 @@ import br.com.apsAnhembi.http.Configuracao;
 import br.com.apsAnhembi.repository.ConfiguracaoRepository;
 import br.com.apsAnhembi.repository.entity.ConfiguracaoEntity;
 import br.com.apsAnhembi.repository.entity.ConfiguracaoEntityPK;
+import br.com.apsAnhembi.uteis.JsonResponse;
 
 /**
  * A classe Configuração historico.
@@ -28,7 +29,7 @@ public class ConfiguracaoController {
     private final ConfiguracaoRepository configuracaoRepository = new ConfiguracaoRepository();
 
     /**
-     * Método cadastrar, responsável por cadastrar um novo item no configuração
+     * Método cadastrar, responsável por cadastrar um novo item de configuração
      *
      * @param configuracao Dados para construção da entidade
      * @return String Json com messagem e status de sucesso
@@ -44,13 +45,13 @@ public class ConfiguracaoController {
                 configuracaoEntity
                         .setId(new ConfiguracaoEntityPK(configuracao.getIdUsuario(), configuracao.getChave()));
                 configuracaoEntity.setValor(configuracao.getValor());
-                configuracaoRepository.Salvar(configuracaoEntity);
-                return "Configuracao cadastrada com sucessso";
+                configuracaoRepository.cadastrar(configuracaoEntity);
+                return new JsonResponse(true, "Configuracao cadastrada com sucessso").toString();
             } catch (Exception e) {
-                return "Ocorreu um erro ao cadastrar a configuracao. " + e.getMessage();
+                return new JsonResponse(false, "Ocorreu um erro ao cadastrar a configuração. " + e.getMessage()).toString();
             }
         }
-        return "Falha ao cadastrar, verifique formatação da Request";
+        return new JsonResponse(false, "Falha ao cadastrar, verifique formatação da Request").toString();
     }
 
     /**
@@ -65,19 +66,18 @@ public class ConfiguracaoController {
     @Consumes("application/json; charset=UTF-8")
     @Path("/alterar")
     public String alterar(Configuracao configuracao) {
-        ConfiguracaoEntity configuracaoEntity = configuracaoRepository
-                .GetConfiguracao(new ConfiguracaoEntityPK(configuracao.getIdUsuario(), configuracao.getChave()));
-        if (configuracaoEntity != null) {
+        if (configuracao != null) {
+            ConfiguracaoEntity configuracaoEntity = configuracaoRepository
+                    .getConfiguracao(new ConfiguracaoEntityPK(configuracao.getIdUsuario(), configuracao.getChave()));
             try {
                 configuracaoEntity.setValor(configuracao.getValor());
-                configuracaoRepository.Alterar(configuracaoEntity);
-
-                return "A configuracao foi alterado com sucesso";
+                configuracaoRepository.alterar(configuracaoEntity);
+                return new JsonResponse(true, "A configuracao foi alterado com sucesso").toString();
             } catch (Exception e) {
-                return "Ocorreu um erro ao tentar alterar a configuracao" + e.getMessage();
+                return new JsonResponse(false, "Ocorreu um erro ao tentar alterar a configuração. " + e.getMessage()).toString();
             }
         }
-        return "Falha ao cadastrar, verifique formatação da Request";
+        return new JsonResponse(false, "Falha ao cadastrar, verifique formatação da Request").toString();
     }
 
     /**
@@ -91,14 +91,13 @@ public class ConfiguracaoController {
     @Produces("application/json; charset=UTF-8")
     @Path("/configuracoes-usuario/{idUsuario}")
     public List<Configuracao> configuracoesUsuario(@PathParam("idusuario") String idUsuario) {
-        List<Configuracao> configuracoes = new ArrayList<Configuracao>();
+        List<Configuracao> configuracoes = new ArrayList<>();
+        List<ConfiguracaoEntity> listaEntityLocais = configuracaoRepository.configuracoesUsuario(idUsuario);
 
-        List<ConfiguracaoEntity> listaEntityLocais = configuracaoRepository.TodasConfiguracoes();
-
-        for (ConfiguracaoEntity configuracaoEntity : listaEntityLocais) {
+        listaEntityLocais.forEach((configuracaoEntity) -> {
             configuracoes.add(new Configuracao(configuracaoEntity.getId().getIdUsuario(),
                     configuracaoEntity.getId().getChave(), configuracaoEntity.getValor()));
-        }
+        });
         return configuracoes;
     }
 
@@ -114,7 +113,7 @@ public class ConfiguracaoController {
     @Path("/getConfiguracao/{idUsuario}/{chave}")
     public Configuracao getConfiguracao(@PathParam("idUsuario") String idUsuario, @PathParam("chave") String chave) {
         ConfiguracaoEntity configuracaoEntity = configuracaoRepository
-                .GetConfiguracao(new ConfiguracaoEntityPK(idUsuario, chave));
+                .getConfiguracao(new ConfiguracaoEntityPK(idUsuario, chave));
 
         if (configuracaoEntity != null) {
             return new Configuracao(configuracaoEntity.getId().getIdUsuario(), configuracaoEntity.getId().getChave(),
@@ -134,13 +133,12 @@ public class ConfiguracaoController {
     @DELETE
     @Produces("application/json; charset=UTF-8")
     @Path("/excluir/{idUsuario}/{chave}")
-    public String Excluir(@PathParam("idUsuario") String idUsuario, @PathParam("chave") String chave) {
+    public String excluir(@PathParam("idUsuario") String idUsuario, @PathParam("chave") String chave) {
         try {
-            configuracaoRepository.Excluir(new ConfiguracaoEntityPK(idUsuario, chave));
-            return "A configuracao foi excluída com sucesso";
+            configuracaoRepository.excluir(new ConfiguracaoEntityPK(idUsuario, chave));
+            return new JsonResponse(true, "A configuracao foi excluída com sucesso").toString();
         } catch (Exception e) {
-            // TODO: handle exception
-            return "Ocorreu um erro ao tentar excluir a configuracao" + e.getMessage();
+            return new JsonResponse(false, "Ocorreu um erro ao tentar excluir a configuração. " + e.getMessage()).toString();
         }
     }
 

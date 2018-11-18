@@ -15,7 +15,6 @@ public class Local {
 	}
 
 	public Local(int id, String idUsuario, String latitude, String longitude, String titulo) {
-		super();
 		this.id = id;
 		this.idUsuario = idUsuario;
 		this.latitude = latitude;

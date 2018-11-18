@@ -15,6 +15,7 @@ import javax.ws.rs.Produces;
 import br.com.apsAnhembi.http.Historico;
 import br.com.apsAnhembi.repository.HistoricoRepository;
 import br.com.apsAnhembi.repository.entity.HistoricoEntity;
+import br.com.apsAnhembi.uteis.JsonResponse;
 
 /**
  * A classe Controlador historico.
@@ -29,7 +30,8 @@ public class HistoricoController {
 
     /**
      * Método cadastrar, responsável por cadastrar um novo item no histórico
-     * @param historico  Dados para construção da entidade
+     *
+     * @param historico Dados para construção da entidade
      * @return String Json com messagem e status de sucesso
      */
     @POST
@@ -43,18 +45,18 @@ public class HistoricoController {
                 historicoEntity.setIdLocal(historico.getIdLocal());
                 historicoEntity.setEntrada(historico.getEntrada());
                 historicoEntity.setSaida(historico.getSaida());
-                historicoRepository.Salvar(historicoEntity);
-                return "Historico cadastrado com sucessso";
+                historicoRepository.cadastrar(historicoEntity);
+                return new JsonResponse(true, "Historico cadastrado com sucessso").toString();
             } catch (Exception e) {
-                System.out.println(e.getMessage());
-                return "Ocorreu um erro ao cadastrar o historico" + e.getMessage();
+                return new JsonResponse(false, "Ocorreu um erro ao cadastrar o historico. " + e.getMessage()).toString();
             }
         }
-        return "Falha ao cadastrar, verifique formatação da Request";
+        return new JsonResponse(false, "Falha ao cadastrar, verifique formatação da Request.").toString();
     }
 
     /**
-     * Método alterar, responsável pelo alteração de uma entitade do tipo Historico
+     * Método alterar, responsável pelo alteração de uma entitade do tipo
+     * Historico
      *
      * @param historico Dados de atualização de uma entidade
      * @return String Json com messagem e status de sucesso
@@ -64,40 +66,45 @@ public class HistoricoController {
     @Consumes("application/json; charset=UTF-8")
     @Path("/alterar")
     public String alterar(Historico historico) {
-        HistoricoEntity historicoEntity = historicoRepository.GetHistorico(historico.getId());
-
-        try {
-            historicoEntity.setEntrada(historico.getEntrada());
-            historicoEntity.setSaida(historico.getSaida());
-            historicoEntity.setId(historico.getId());
-            historicoRepository.Alterar(historicoEntity);
-            return "O historico foi alterado com sucesso";
-        } catch (Exception e) {
-            return "Ocorreu um erro ao tentar alterar o historico" + e.getMessage();
+        if (historico != null) {
+            try {
+                HistoricoEntity historicoEntity = historicoRepository.getHistorico(historico.getId());
+                historicoEntity.setEntrada(historico.getEntrada());
+                historicoEntity.setSaida(historico.getSaida());
+                historicoEntity.setId(historico.getId());
+                historicoRepository.alterar(historicoEntity);
+                return new JsonResponse(true, "O historico foi alterado com sucesso").toString();
+            } catch (Exception e) {
+                return new JsonResponse(false, "Ocorreu um erro ao tentar alterar o historico" + e.getMessage()).toString();
+            }
         }
+        return new JsonResponse(false, "Falha ao cadastrar, verifique formatação da Request.").toString();
     }
 
     /**
-     * Método historicoLocal, responsável por listar todos historico de um local
-     * @param idLocal que será de base para a listagem  de históricos
+     * Método historicoLocal, responsável por listar todos historico de um
+     * local.
+     *
+     * @param idLocal que será de base para a listagem de históricos
      * @return List lista de historicos achados
      */
     @GET
     @Produces("application/json; charset=UTF-8")
     @Path("/historico-local/{idLocal}")
     public List<Historico> historicoLocal(@PathParam("idLocal") int idLocal) {
-        List<Historico> locais = new ArrayList<Historico>();
-        List<HistoricoEntity> listaEntityLocais = historicoRepository.TodoHistorico();
+        List<Historico> locais = new ArrayList<>();
+        List<HistoricoEntity> listaEntityLocais = historicoRepository.historicoLocal(idLocal);
 
-        for (HistoricoEntity historicoEntity : listaEntityLocais) {
+        listaEntityLocais.forEach((historicoEntity) -> {
             locais.add(new Historico(historicoEntity.getId(), historicoEntity.getIdLocal(),
                     historicoEntity.getEntrada(), historicoEntity.getSaida()));
-        }
+        });
         return locais;
     }
 
     /**
      * Método getHistorico, responsável por pegar um historico pelo id
+     *
      * @param id id do historico
      * @return Historico Historico encontrado
      */
@@ -105,8 +112,7 @@ public class HistoricoController {
     @Produces("application/json; charset=UTF-8")
     @Path("/getHistorico/{id}")
     public Historico getHistorico(@PathParam("id") Integer id) {
-        HistoricoEntity historicoEntity = historicoRepository.GetHistorico(id);
-
+        HistoricoEntity historicoEntity = historicoRepository.getHistorico(id);
         if (historicoEntity != null) {
             return new Historico(historicoEntity.getId(), historicoEntity.getIdLocal(), historicoEntity.getEntrada(),
                     historicoEntity.getSaida());
@@ -114,9 +120,9 @@ public class HistoricoController {
         return null;
     }
 
-   /**
-     * Método excluir, responsável por remover uma entidade Historico do banco de
-     * dados
+    /**
+     * Método excluir, responsável por remover uma entidade Historico do banco
+     * de dados
      *
      * @param id id do local para ser excluido
      * @return String Json com messagem e status de sucesso
@@ -126,10 +132,10 @@ public class HistoricoController {
     @Path("/excluir/{id}")
     public String excluir(@PathParam("id") Integer id) {
         try {
-            historicoRepository.Excluir(id);
-            return "O historico foi excluído com sucesso";
+            historicoRepository.excluir(id);
+            return new JsonResponse(true, "O historico foi excluído com sucesso").toString();
         } catch (Exception e) {
-            return "Ocorreu um erro ao tentar excluir o historico" + e.getMessage();
+            return new JsonResponse(false, "Ocorreu um erro ao tentar excluir o historico.").toString();
         }
     }
 

@@ -4,43 +4,42 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 public class Configuracao {
-	String idUsuario;
-	String chave;
-	String valor;
 
-	public Configuracao(String idUsuario, String chave, String valor) {
-		super();
-		this.idUsuario = idUsuario;
-		this.chave = chave;
-		this.valor = valor;
-	}
+    String idUsuario;
+    String chave;
+    String valor;
 
-	public Configuracao() {
-		super();
-	}
+    public Configuracao(String idUsuario, String chave, String valor) {
+        this.idUsuario = idUsuario;
+        this.chave = chave;
+        this.valor = valor;
+    }
 
-	public String getIdUsuario() {
-		return idUsuario;
-	}
+    public Configuracao() {
+    }
 
-	public void setIdUsuario(String idUsuario) {
-		this.idUsuario = idUsuario;
-	}
+    public String getIdUsuario() {
+        return idUsuario;
+    }
 
-	public String getChave() {
-		return chave;
-	}
+    public void setIdUsuario(String idUsuario) {
+        this.idUsuario = idUsuario;
+    }
 
-	public void setChave(String chave) {
-		this.chave = chave;
-	}
+    public String getChave() {
+        return chave;
+    }
 
-	public String getValor() {
-		return valor;
-	}
+    public void setChave(String chave) {
+        this.chave = chave;
+    }
 
-	public void setValor(String valor) {
-		this.valor = valor;
-	}
+    public String getValor() {
+        return valor;
+    }
+
+    public void setValor(String valor) {
+        this.valor = valor;
+    }
 
 }

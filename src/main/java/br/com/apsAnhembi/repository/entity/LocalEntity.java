@@ -8,65 +8,64 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="local")
+@Table(name = "local")
 public class LocalEntity {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="id")
-	private Integer id;
-	
-	@Column(name="id_usuario")	
-	private String  idUsuario;
-	
-	@Column(name="latitude")	
-	private String  latitude;
-	
-	@Column(name="longitude")	
-	private String  longitude;
-	
-	@Column(name="titulo")	
-	private String  titulo;
-	
-	public Integer getId() {
-		return id;
-	}
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Integer id;
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    @Column(name = "id_usuario")
+    private String idUsuario;
 
-	public String getIdUsuario() {
-		return idUsuario;
-	}
+    @Column(name = "latitude")
+    private String latitude;
 
-	public void setIdUsuario(String idUsuario) {
-		this.idUsuario = idUsuario;
-	}
+    @Column(name = "longitude")
+    private String longitude;
 
-	public String getLatitude() {
-		return latitude;
-	}
+    @Column(name = "titulo")
+    private String titulo;
 
-	public void setLatitude(String latitude) {
-		this.latitude = latitude;
-	}
+    public Integer getId() {
+        return id;
+    }
 
-	public String getLongitude() {
-		return longitude;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public void setLongitude(String longitude) {
-		this.longitude = longitude;
-	}
+    public String getIdUsuario() {
+        return idUsuario;
+    }
 
-	public String getTitulo() {
-		return titulo;
-	}
+    public void setIdUsuario(String idUsuario) {
+        this.idUsuario = idUsuario;
+    }
 
-	public void setTitulo(String titulo) {
-		this.titulo = titulo;
-	}
-	
-	
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
+
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
 }

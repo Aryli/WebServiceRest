@@ -15,6 +15,7 @@ import javax.ws.rs.Produces;
 import br.com.apsAnhembi.http.Local;
 import br.com.apsAnhembi.repository.LocalRepository;
 import br.com.apsAnhembi.repository.entity.LocalEntity;
+import br.com.apsAnhembi.uteis.JsonResponse;
 
 /**
  * A classe Controlador local.
@@ -30,6 +31,7 @@ public class LocalController {
     /**
      * Método cadastrar, responsável pelo cadastro de novas entidades do tipo
      * Local
+     *
      * @param local Dados para construção da entidade
      * @return String Json com messagem e status de sucesso
      */
@@ -39,22 +41,20 @@ public class LocalController {
     @Path("/cadastrar")
     public String cadastrar(Local local) {
         LocalEntity localEntity = new LocalEntity();
-        if (localEntity != null) {
+        if (local != null) {
             try {
                 localEntity.setIdUsuario(local.getIdUsuario());
                 localEntity.setLatitude(local.getLatitude());
                 localEntity.setLongitude(local.getLongitude());
                 localEntity.setTitulo(local.getTitulo());
+                localRepository.cadastrar(localEntity);
 
-                localRepository.Salvar(localEntity);
-
-                return "{\"sucess\": true, \"message\": \"Local cadastrado com sucessso\"}";
+                return new JsonResponse(true, "Local cadastrado com sucessso.").toString();
             } catch (Exception e) {
-                return "{\"sucess\": false, \"message\": \"Ocorreu um erro ao cadastrar o local: " + e.getMessage()
-                        + " \"}";
+                return new JsonResponse(false, "Ocorreu um erro ao cadastrar o local: " + e.getMessage()).toString();
             }
         }
-        return "{\"sucess\": false, \"message\": \"Falha ao cadastrar, verifique formatação da Request\"}";
+        return new JsonResponse(false, "Falha ao cadastrar, verifique formatação da Request").toString();
     }
 
     /**
@@ -68,24 +68,20 @@ public class LocalController {
     @Consumes("application/json; charset=UTF-8")
     @Path("/alterar")
     public String alterar(Local local) {
-        LocalEntity localEntity = localRepository.GetLocal(local.getId());
-        if (localEntity != null) {
+        if (local != null) {
+            LocalEntity localEntity = localRepository.getLocal(local.getId());
             try {
                 localEntity.setLatitude(local.getLatitude());
                 localEntity.setLongitude(local.getLongitude());
                 localEntity.setTitulo(local.getTitulo());
+                localRepository.alterar(localEntity);
 
-                localRepository.Alterar(localEntity);
-
-                return "{\"sucess\": true, \"message\": \"O local foi alterado com sucesso\"}";
-
+                return new JsonResponse(true, "O local foi alterado com sucesso").toString();
             } catch (Exception e) {
-                return "{\"sucess\": false, \"message\": \"Ocorreu um erro ao alterar o local: " + e.getMessage()
-                        + " \"}";
+                return new JsonResponse(false, "Ocorreu um erro ao alterar o local: " + e.getMessage()).toString();
             }
         }
-        return "{\"sucess\": false, \"message\": \"Falha ao cadastrar, verifique formatação da Request\"}";
-
+        return new JsonResponse(false, "Falha ao cadastrar, verifique formatação da Request").toString();
     }
 
     /**
@@ -99,13 +95,13 @@ public class LocalController {
     @Produces("application/json; charset=UTF-8")
     @Path("/locais-usuario/{idUsuario}")
     public List<Local> locaisUsuario(@PathParam("idUsuario") String idUsuario) {
-        List<Local> locais = new ArrayList<Local>();
-        List<LocalEntity> listaEntityLocais = localRepository.TodosLocais();
+        List<Local> locais = new ArrayList<>();
+        List<LocalEntity> listaEntityLocais = localRepository.locaisUsuario(idUsuario);
 
-        for (LocalEntity localEntity : listaEntityLocais) {
+        listaEntityLocais.forEach((localEntity) -> {
             locais.add(new Local(localEntity.getId(), localEntity.getIdUsuario(), localEntity.getLatitude(),
                     localEntity.getLongitude(), localEntity.getTitulo()));
-        }
+        });
         return locais;
     }
 
@@ -121,10 +117,10 @@ public class LocalController {
     @Path("/excluir/{id}")
     public String excluir(@PathParam("id") Integer id) {
         try {
-            localRepository.Excluir(id);
-            return "{\"message\" : \"O local foi excluído com sucesso\"}";
+            localRepository.excluir(id);
+            return new JsonResponse(true, "O local foi excluído com sucesso.").toString();
         } catch (Exception e) {
-            return "Ocorreu um erro ao tentar excluir o local" + e.getMessage();
+            return new JsonResponse(false, "Ocorreu um erro ao tentar excluir o local. " + e.getMessage()).toString();
         }
     }
 

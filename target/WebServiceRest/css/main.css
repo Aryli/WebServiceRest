@@ -1,0 +1,321 @@
+body{
+    background-color: #1999aa !important;
+}
+#mainHeader{
+    width: 100%;
+    height: 120px;
+    background-color: brown;
+    position: fixed;
+    z-index: 3;
+    top: 0px;
+    left: 0px;
+}
+
+#mainHeader #mainLogo img {
+    width: 270px;
+}
+
+@media screen and (max-width: 600px) {
+    #appDescription .imgDescription {
+      text-align: center;
+    }
+  }
+
+#mainHeader #headerUsers {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+}
+
+
+#mainHeader #options{
+    float: right;
+}
+
+.como-funciona{
+    background-color: #1999aa;
+}
+
+#mainHeader #navegationBasic a{
+    padding: 8px;
+    background-color: #1999aa;
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 500;
+    top:30%;
+    right: 0;
+}
+
+#divTopoPreto {
+    width: 100%;
+    height: 60px;
+    background-color: #000;
+    position: fixed;
+    z-index: 4;
+    top: 0px;
+    left: 0px;
+    display: none;
+}
+
+#appDescription{
+    margin-top: 120px;
+    position: relative;
+    background-color: #ffffff;
+}
+
+#appDescription:before{
+    content: ' ';
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    left: 50%;
+    background-color: #ffffff;
+    -webkit-transform: rotate(45deg);
+    bottom: -20px;
+}
+
+@media screen and (max-width: 600px) {
+    #register{
+        padding-bottom: 20px;
+    }
+      
+}
+
+#mainHeader:before{
+    content: ' ';
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    left: 50%;
+    background-color: brown;
+    -webkit-transform: rotate(45deg);
+    top: 100px;
+}
+
+
+#appDescription .container{
+    padding-top: 16px;
+}
+
+.title{
+    text-align: center;
+}
+
+
+@media (min-width: 1024px){
+#mainHeader #navegationBasic {
+    right: calc(246px - 210px);
+}
+}
+
+#mainHeader #navegationBasic {
+    margin-top: 16px;
+    position: absolute;
+    top: 30px;
+}
+
+.como-funciona {
+    padding: 40px;
+}
+
+.como-funciona p {
+    color: #ffffff;
+    font-weight: 500;
+    padding-top: 20px;
+}
+
+.como-funciona img{
+    max-width: 100px;
+}
+
+.como-funciona .col-md-3{
+    text-align: center;
+}
+
+#footer h5{
+	padding-left: 10px;
+    border-left: 3px solid #eeeeee;
+    padding-bottom: 6px;
+    margin-bottom: 20px;
+    color:#ffffff;
+}
+#footer a {
+    color: #ffffff;
+    text-decoration: none !important;
+    background-color: transparent;
+    -webkit-text-decoration-skip: objects;
+}
+#footer ul.social li{
+	padding: 3px 0;
+}
+#footer ul.social li a i {
+    margin-right: 5px;
+	font-size:25px;
+	-webkit-transition: .5s all ease;
+	-moz-transition: .5s all ease;
+	transition: .5s all ease;
+}
+#footer ul.social li:hover a i {
+	font-size:30px;
+	margin-top:-10px;
+}
+#footer ul.social li a,
+#footer ul.quick-links li a{
+	color:#ffffff;
+}
+#footer ul.social li a:hover{
+	color:#eeeeee;
+}
+#footer ul.quick-links li{
+	padding: 3px 0;
+	-webkit-transition: .5s all ease;
+	-moz-transition: .5s all ease;
+	transition: .5s all ease;
+}
+#footer ul.quick-links li:hover{
+	padding: 3px 0;
+	margin-left:5px;
+	font-weight:700;
+}
+#footer ul.quick-links li a i{
+	margin-right: 5px;
+}
+#footer ul.quick-links li:hover a i {
+    font-weight: 700;
+}
+
+@media (max-width:767px){
+	#footer h5 {
+    padding-left: 0;
+    border-left: transparent;
+    padding-bottom: 0px;
+    margin-bottom: 10px;
+}
+}
+
+#userLoginRegister{
+    margin-top: 120px;
+    padding-top: 50px;
+    background-color: #ffffff;
+    padding-bottom: 20px;
+}
+
+#userLoginRegister #register{
+
+    background-color: #ffffff;
+}
+
+#userLoginRegister #login{
+    background-color: #ffffff;
+}
+
+.description{
+    text-align: center;
+}
+
+.imgGooglePlay{
+    max-width: 150px !important;
+}
+
+.divQrCode{
+    text-align: center;
+}
+
+.divGooglePlay{
+    text-align: center;
+}
+
+#register .description{
+    padding-bottom: 8px;
+}
+
+#error{
+	background-color: #043a51 !important;
+	position: relative;
+	padding: 4px;
+	width: 250px;
+	text-align: center;
+	color: #ffffff;
+	font-weight: bold;
+    margin: 0 auto;
+    margin-bottom: 8px;
+}
+
+#error:before{
+	content: '';
+	position: absolute;
+	width: 10px;
+	height: 10px;
+	left: 78px;
+    top: 25px;
+	-webkit-transform: rotate(45deg);
+	background-color: #043a51;
+}
+
+#btnLogin{
+    
+        padding: 8px;
+        margin: 0 auto;
+        background-color: #1999aa !important;
+        font-family: "Roboto Condensed", sans-serif;
+        border: none;
+        font-size: 18px;
+        width: 128px;
+        text-align: center;
+        color: #ffffff !important;
+        font-weight: bold;
+    
+}
+
+.divSubmit{
+    text-align: center;
+}
+
+.redesSociais .title{
+    font-size: 1.5em;
+}
+
+#overlay {
+    position: fixed;
+    display: none;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 999;
+    cursor: pointer;
+}
+
+#divEsqueciSenha{
+    display: none;
+    background-color: #fff;
+
+    height: auto;
+    margin: 0 auto;
+    padding: 20px;
+    margin-top: 40px;
+}
+
+#divEsqueciEmail{
+    display: none;
+    background-color: #fff;
+    height: auto;
+    margin: 0 auto;
+    padding: 20px;
+    margin-top: 40px;
+}
+
+#overlay .title{
+    text-align: center;
+    text-transform: uppercase;
+    color: #ccc;
+    font-size: 16px;
+}
+
+#about{
+    background-color: #fff;
+}
+
