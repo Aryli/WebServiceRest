@@ -39,36 +39,34 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6" id="register">
-                    <h1 class="title">Não tem cadastro? Siga as instruções e comece</h1>
+                    <h1 class="title">NÃ£o tem cadastro? Siga as instruÃ§Ãµes e comece</h1>
                     <p class="description">ligula nostra egestas pretium, maecenas vel curabitur sodales bibendum
                         laoreet adipiscing placerat semper</p>
 
                     <hr>
 
-                    <div class="divQrCode d-none d-sm-block">
-                        <p>Use o
-                            <b>QR Code</b> abaixo para realizar o download do aplicativo para dispositivos Android. É
-                            só usar
-                            um escaneador e pronto, voce será redirecionado para o página do APP na Google Play</p>
-                        <a href="">
-                            <img src="images/qrCode.png" alt="">
-                        </a>
-                        <p>O APP ainda não está disponivel para dispositos IOS, desculpe os possiveis transtornos D:</p>
-                    </div>
+                    <form action="">
+                        <div class="input-field col s12">
+                            <input type="text" id="txtEmail" name="email">
+                            <label for="txtEmail">Digite o seu email</label>
+                        </div>
 
-                    <div class="divGooglePlay d-block d-sm-none">
-                        <p>É só clicar no
-                            <b>botão</b> abaixo para realizar o download do aplicativo para dispositivos Android. É só
-                            usar
-                            um clicar e pronto, voce será redirecionado para o página do APP na Google Play</p>
-                        <a href="">
-                            <img class="img-fluid imgGooglePlay" src="images/googlePlay.png" alt="">
-                        </a>
-                        <p style="padding-top: 8px">O APP ainda não está disponivel para dispositos IOS, desculpe os
-                            possiveis transtornos D:</p>
-                    </div>
+                        <div class="input-field col s12">
+                            <input type="password" id="senha">
+                            <label for="senha">Digite a sua senha</label>
+                        </div>
 
+                        <div class="input-field col s12">
+                                <input type="password" id="confirmacaoSenha">
+                                <label for="confirmacaoSenha">Digite a confirmacao da sua senha</label>
+                            </div>
 
+                        <div class="divSubmit input-field col s12">
+                            <div id="erroCadastrar" style="display: none" class="error"></div>
+                            <button type="submit" id="btnCadastrar"> Cadastrar</button>
+                        </div>
+
+                    </form>
                 </div>
                 <div class="col-md-6" id="login">
                     <div class="headerLogin">
@@ -132,13 +130,13 @@
     <div id="overlay">
         <div id="divEsqueciSenha" class="col-md-6 col-xs-4">
             <div class="header">
-            <span id="fechar">x</span>
+                <span id="fechar">x</span>
                 <h1 class="title">Esqueci minha Senha</h1>
             </div>
         </div>
-        <div id="divEsqueciEmail"  class="col-md-6 col-xs-4">
+        <div id="divEsqueciEmail" class="col-md-6 col-xs-4">
             <div class="header">
-                <span id="fechar"X></span>
+                <span id="fechar" X></span>
                 <h1 class="title">Esqueci meu E-mail</h1>
             </div>
         </div>
@@ -172,6 +170,20 @@
             </div>
         </div>
     </footer>
+
+    <script src="https://www.gstatic.com/firebasejs/5.5.8/firebase.js"></script>
+    <script>
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyBD8tRg-UUE9TZYxlKqzI1rd_8Z5duYMnI",
+            authDomain: "apsanhembi.firebaseapp.com",
+            databaseURL: "https://apsanhembi.firebaseio.com",
+            projectId: "apsanhembi",
+            storageBucket: "apsanhembi.appspot.com",
+            messagingSenderId: "910769094357"
+        };
+        firebase.initializeApp(config);
+    </script>
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>

@@ -1,5 +1,5 @@
 $("#btnLogin").click(function () {
-    
+
     if ($("#email").val() == "") {
         $('#error').css("display", "");
         $('#error').html("O campo e-mail é obrigatório");
@@ -21,6 +21,30 @@ $("#btnLogin").click(function () {
         $('#error').html("Por favor, digite um e-mail válido");
         return false;
     }
+
+    var email = $("#email").val();
+    var senha = $("#password").val();
+
+
+    firebase.auth().signInWithEmailAndPassword(email, senha).catch(function(error) {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        // [START_EXCLUDE]
+        if (errorCode === 'auth/wrong-password') {
+            $('#error').css("display", "");
+            $('#error').html("Senha Incorreta");
+        } else {
+          alert(errorMessage);
+        }
+
+        if (errorCode === 'auth/user-not-found') {
+            $('#error').css("display", "");
+            $('#error').html("Usuário não cadastrado no sistema");
+        }
+        console.log(error);
+      });
+
 });
 
 function validaEmail(email) {
@@ -37,13 +61,109 @@ $('#password').focus(function () {
 });
 
 
-$("#lnkEsqueciSenha").click(function(){
-    document.getElementById("overlay").style.display = "block";
-    document.getElementById("divEsqueciSenha").style.display = "block";
-    
+$('#txtEmail').focus(function () {
+    $('#erroCadastrar').css("display", "none");
 });
 
-$("#lnkEsqueciEmail").click(function(){
+$('#senha').focus(function () {
+    $('#erroCadastrar').css("display", "none");
+});
+
+$('#confirmacaoSenha').focus(function () {
+    $('#erroCadastrar').css("display", "none");
+});
+
+
+
+$("#lnkEsqueciSenha").click(function () {
+    document.getElementById("overlay").style.display = "block";
+    document.getElementById("divEsqueciSenha").style.display = "block";
+
+});
+
+$("#lnkEsqueciEmail").click(function () {
     document.getElementById("overlay").style.display = "block";
     document.getElementById("divEsqueciEmail").style.display = "block";
 });
+
+
+$("#btnCadastrar").click(function () {
+
+    if ($("#txtEmail").val() == "") {
+        $('#erroCadastrar').css("display", "");
+        $('#erroCadastrar').html("O campo e-mail é obrigatório");
+        return false;
+    }
+
+    var email = $("#txtEmail").val();
+
+    if (validaEmail(email)) {
+        $('#erroCadastrar').css("display", "none");
+    } else {
+        $('#erroCadastrar').css("display", "");
+        $('#erroCadastrar').html("Por favor, digite um e-mail válido");
+        return false;
+    }
+
+    if ($("#senha").val() == "") {
+        $('#erroCadastrar').css("display", "");
+        $('#erroCadastrar').html("O campo senha é obrigatório");
+        return false;
+    } else {
+        if ($('#senha').val().length < 6) {
+            $('#erroCadastrar').css("display", "");
+            $('#erroCadastrar').html("O campo senha deve ser pelo menos 6 caracteres");
+            return false;
+        }
+    }
+
+    if ($("#confirmacaoSenha").val() == "") {
+        $('#erroCadastrar').css("display", "");
+        $('#erroCadastrar').html("O campo confirmacao de senha é obrigatório");
+        return false;
+    }
+
+    if ($("#senha").val() != $("#confirmacaoSenha").val()) {
+        $('#erroCadastrar').css("display", "");
+        $('#erroCadastrar').html("As senhas são diferentes");
+        return false;
+    }
+
+    var email = $("#txtEmail").val();
+    var senha = $("#senha").val();
+
+    firebase.auth().createUserWithEmailAndPassword(email, senha).catch(function(error) {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        // [START_EXCLUDE]
+        if (errorCode == 'auth/weak-password') {
+          alert('The password is too weak.');
+        } else {
+          alert(errorMessage);
+        }
+        console.log(error);
+        // [END_EXCLUDE]
+      });
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
