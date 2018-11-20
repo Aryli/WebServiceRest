@@ -25,25 +25,26 @@ $("#btnLogin").click(function () {
     var email = $("#email").val();
     var senha = $("#password").val();
 
+    firebase.auth().createUserWithEmailAndPassword(email, senha).then(userData => { 
+        //Sucesso - tratar sucesso aqui 
+    }) 
+    .catch(error => { 
+        // Erro - tratar erros aqui
 
-    firebase.auth().signInWithEmailAndPassword(email, senha).catch(function(error) {
-        // Handle Errors here.
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        // [START_EXCLUDE]
-        if (errorCode === 'auth/wrong-password') {
-            $('#error').css("display", "");
-            $('#error').html("Senha Incorreta");
-        } else {
-          alert(errorMessage);
-        }
+         // Handle Errors here.
+         var errorCode = error.code;
+         var errorMessage = error.message;
+         // [START_EXCLUDE]
+         if (errorCode === 'auth/wrong-password') {
+             $('#error').css("display", "");
+             $('#error').html("Senha Incorreta");
+         } 
 
-        if (errorCode === 'auth/user-not-found') {
-            $('#error').css("display", "");
-            $('#error').html("Usuário não cadastrado no sistema");
-        }
-        console.log(error);
-      });
+         if (errorCode === 'auth/user-not-found') {
+             $('#error').css("display", "");
+             $('#error').html("Usuário não cadastrado no sistema");
+         }
+     })
 
 });
 
@@ -132,19 +133,21 @@ $("#btnCadastrar").click(function () {
     var email = $("#txtEmail").val();
     var senha = $("#senha").val();
 
-    firebase.auth().createUserWithEmailAndPassword(email, senha).catch(function(error) {
+    firebase.auth().createUserWithEmailAndPassword(email, senha).then(userData => {
+        // success - do stuff with userData
+    }).catch(error => {
+        // do stuff with error
         // Handle Errors here.
+
         var errorCode = error.code;
         var errorMessage = error.message;
         // [START_EXCLUDE]
         if (errorCode == 'auth/weak-password') {
-          alert('The password is too weak.');
+            alert('The password is too weak.');
         } else {
-          alert(errorMessage);
+            alert(errorMessage);
         }
-        console.log(error);
-        // [END_EXCLUDE]
-      });
+    })
 });
 
 
